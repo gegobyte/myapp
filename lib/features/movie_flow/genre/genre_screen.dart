@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import './genre.dart';
 import '../../../core/widgets/primary_button.dart';
 import '../../../core/constants.dart';
 import './list_card.dart';

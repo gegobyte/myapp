@@ -3,9 +3,9 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:myapp/features/movie_flow/movie_flow_controller.dart';
 
 import './movie.dart';
-import '../genre/genre.dart';
 import '../../../core/constants.dart';
 import '../../../core/widgets/primary_button.dart';
+import './similar_movies.dart';
 
 class ResultScreen extends ConsumerWidget {
   static route({bool fullscreenDialog = true}) => MaterialPageRoute(
@@ -49,28 +49,20 @@ class ResultScreen extends ConsumerWidget {
                             style: Theme.of(context).textTheme.bodyText2,
                           ),
                         ),
+                        Padding(
+                          padding: const EdgeInsets.all(16.0),
+                          child: Align(
+                            alignment: Alignment.centerLeft,
+                            child: Text(
+                              'Similar Movies',
+                              style: Theme.of(context).textTheme.headline6,
+                            ),
+                          ),
+                        ),
+                        const SimilarMovies(),
                       ],
                     ),
                   ),
-                  Text(
-                    'Similar Movies',
-                    style: Theme.of(context).textTheme.headline6,
-                  ),
-                  ref.watch(movieFlowControllerProvider).similarMovies.when(
-                        data: (similarMovies) {
-                          return ListView.builder(
-                            scrollDirection: Axis.horizontal,
-                            itemBuilder: (context, index) {
-                              return Text(similarMovies[index].title);
-                            },
-                            itemCount: similarMovies.length,
-                          );
-                        },
-                        error: (e, s) => const Text('Something went wrong!'),
-                        loading: () => const Center(
-                          child: CircularProgressIndicator(),
-                        ),
-                      ),
                   PrimaryButton(
                     onPressed: () => Navigator.of(context).pop(),
                     text: 'Find another movie',

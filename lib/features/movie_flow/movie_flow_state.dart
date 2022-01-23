@@ -11,6 +11,7 @@ class MovieFlowState {
   final int yearsBack;
   final AsyncValue<List<Genre>> genres;
   final AsyncValue<Movie> movie;
+  final AsyncValue<List<Movie>> similarMovies;
 
   const MovieFlowState({
     required this.pageController,
@@ -18,6 +19,7 @@ class MovieFlowState {
     this.yearsBack = 10,
     required this.genres,
     required this.movie,
+    required this.similarMovies,
   });
 
   MovieFlowState copyWith({
@@ -26,6 +28,7 @@ class MovieFlowState {
     int? yearsBack,
     AsyncValue<List<Genre>>? genres,
     AsyncValue<Movie>? movie,
+    AsyncValue<List<Movie>>? similarMovies,
   }) {
     return MovieFlowState(
       pageController: pageController ?? this.pageController,
@@ -33,6 +36,7 @@ class MovieFlowState {
       yearsBack: yearsBack ?? this.yearsBack,
       genres: genres ?? this.genres,
       movie: movie ?? this.movie,
+      similarMovies: similarMovies ?? this.similarMovies,
     );
   }
 
@@ -45,7 +49,8 @@ class MovieFlowState {
         other.rating == rating &&
         other.yearsBack == yearsBack &&
         other.genres == genres &&
-        other.movie == movie;
+        other.movie == movie &&
+        other.similarMovies == similarMovies;
   }
 
   @override
@@ -54,6 +59,7 @@ class MovieFlowState {
         rating.hashCode ^
         yearsBack.hashCode ^
         genres.hashCode ^
-        movie.hashCode;
+        movie.hashCode ^
+        similarMovies.hashCode;
   }
 }

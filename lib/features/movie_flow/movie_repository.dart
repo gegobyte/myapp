@@ -18,6 +18,7 @@ abstract class MovieRepository {
     String date,
     String genreIds,
   );
+  Future<List<MovieEntity>> getSimilarMovies(int movieId);
 }
 
 class TMDBMovieRepository implements MovieRepository {
@@ -63,5 +64,20 @@ class TMDBMovieRepository implements MovieRepository {
     final results = List<Map<String, dynamic>>.from(response.data['results']);
     final movies = results.map((e) => MovieEntity.fromMap(e)).toList();
     return movies;
+  }
+
+  @override
+  Future<List<MovieEntity>> getSimilarMovies(int movieId) async {
+    final response = await dio.get(
+      '/movie/$movieId/similar',
+      queryParameters: {
+        'api_key': api,
+        'language': 'en-US',
+      },
+    );
+
+    final results = List<Map<String, dynamic>>.from(response.data['results']);
+    final similarMovies = results.map((e) => MovieEntity.fromMap(e)).toList();
+    return similarMovies;
   }
 }

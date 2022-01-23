@@ -2,6 +2,7 @@ import 'package:flutter/foundation.dart';
 
 @immutable
 class MovieEntity {
+  final int id;
   final String title;
   final String overview;
   final num voteAverage;
@@ -11,6 +12,7 @@ class MovieEntity {
   final String? posterPath;
 
   const MovieEntity({
+    required this.id,
     required this.title,
     required this.overview,
     required this.voteAverage,
@@ -22,6 +24,7 @@ class MovieEntity {
 
   factory MovieEntity.fromMap(Map<String, dynamic> map) {
     return MovieEntity(
+      id: map['id'],
       title: map['title'],
       overview: map['overview'],
       voteAverage: map['vote_average'],
@@ -37,6 +40,7 @@ class MovieEntity {
     if (identical(this, other)) return true;
 
     return other is MovieEntity &&
+        other.id == id &&
         other.title == title &&
         other.overview == overview &&
         other.voteAverage == voteAverage &&
@@ -48,7 +52,8 @@ class MovieEntity {
 
   @override
   int get hashCode {
-    return title.hashCode ^
+    return id.hashCode ^
+        title.hashCode ^
         overview.hashCode ^
         voteAverage.hashCode ^
         genreIds.hashCode ^
@@ -59,6 +64,6 @@ class MovieEntity {
 
   @override
   String toString() {
-    return 'MovieEntity(title: $title, overview: $overview, voteAverage: $voteAverage, genreIds: $genreIds, releaseDate: $releaseDate, backdropPath: $backdropPath, posterPath: $posterPath)';
+    return 'MovieEntity(id: $id, title: $title, overview: $overview, voteAverage: $voteAverage, genreIds: $genreIds, releaseDate: $releaseDate, backdropPath: $backdropPath, posterPath: $posterPath)';
   }
 }

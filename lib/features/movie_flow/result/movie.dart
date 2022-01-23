@@ -5,6 +5,7 @@ import './movie_entity.dart';
 
 @immutable
 class Movie {
+  final int id;
   final String title;
   final String overview;
   final num voteAverage;
@@ -14,6 +15,7 @@ class Movie {
   final String? posterPath;
 
   const Movie({
+    required this.id,
     required this.title,
     required this.overview,
     required this.voteAverage,
@@ -24,7 +26,8 @@ class Movie {
   });
 
   Movie.initial()
-      : title = '',
+      : id = 0,
+        title = '',
         overview = '',
         voteAverage = 0,
         genres = [],
@@ -34,6 +37,7 @@ class Movie {
 
   factory Movie.fromEntity(MovieEntity entity, List<Genre> genres) {
     return Movie(
+      id: entity.id,
       title: entity.title,
       overview: entity.overview,
       voteAverage: entity.voteAverage,
@@ -52,7 +56,7 @@ class Movie {
 
   @override
   String toString() {
-    return 'Movie(title: $title, overview: $overview, voteAverage: $voteAverage, genres: $genres, releaseDate: $releaseDate, backdropPath: $backdropPath, posterPath: $posterPath)';
+    return 'Movie(id: $id, title: $title, overview: $overview, voteAverage: $voteAverage, genres: $genres, releaseDate: $releaseDate, backdropPath: $backdropPath, posterPath: $posterPath)';
   }
 
   @override
@@ -60,6 +64,7 @@ class Movie {
     if (identical(this, other)) return true;
 
     return other is Movie &&
+        other.id == id &&
         other.title == title &&
         other.overview == overview &&
         other.voteAverage == voteAverage &&
@@ -69,7 +74,8 @@ class Movie {
 
   @override
   int get hashCode {
-    return title.hashCode ^
+    return id.hashCode ^
+        title.hashCode ^
         overview.hashCode ^
         voteAverage.hashCode ^
         genres.hashCode ^

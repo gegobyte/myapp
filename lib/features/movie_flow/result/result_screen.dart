@@ -52,6 +52,25 @@ class ResultScreen extends ConsumerWidget {
                       ],
                     ),
                   ),
+                  Text(
+                    'Similar Movies',
+                    style: Theme.of(context).textTheme.headline6,
+                  ),
+                  ref.watch(movieFlowControllerProvider).similarMovies.when(
+                        data: (similarMovies) {
+                          return ListView.builder(
+                            scrollDirection: Axis.horizontal,
+                            itemBuilder: (context, index) {
+                              return Text(similarMovies[index].title);
+                            },
+                            itemCount: similarMovies.length,
+                          );
+                        },
+                        error: (e, s) => const Text('Something went wrong!'),
+                        loading: () => const Center(
+                          child: CircularProgressIndicator(),
+                        ),
+                      ),
                   PrimaryButton(
                     onPressed: () => Navigator.of(context).pop(),
                     text: 'Find another movie',
